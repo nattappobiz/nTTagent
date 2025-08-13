@@ -121,8 +121,18 @@ def compute_age_years(dob: dt.date, reference_date: dt.date) -> Optional[int]:
     Optional[int]
         Age in complete years, or ``None`` if inputs are invalid.
     """
-    if not dob or not reference_date:
+    # Validate inputs. ``datetime.date`` instances are expected; return ``None``
+    # for any other types or missing values to avoid ``AttributeError`` at
+    # runtime.
+    if not isinstance(dob, dt.date) or not isinstance(reference_date, dt.date):
         return None
+
+    # If the reference date precedes the date of birth the age would be
+    # negative, which does not make sense in this context. Guard against this
+    # by returning ``None`` instead of a negative value.
+    if reference_date < dob:
+        return None
+
     years = reference_date.year - dob.year
     # Adjust if birthday hasn't occurred yet this year
     if (reference_date.month, reference_date.day) < (dob.month, dob.day):
