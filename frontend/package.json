@@ -11,6 +11,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build:staging": "REACT_APP_API_URL=https://staging.example.com react-scripts build",
+    "build:prod": "REACT_APP_API_URL=https://api.example.com react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "dev": "react-scripts start"

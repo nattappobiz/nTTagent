@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create axios instance with default config
 const apiClient = axios.create({
-  baseURL: 'http://localhost:8000', // Default backend URL
+  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:8000', // Backend URL from environment
   timeout: 30000,
   headers: {
     'Content-Type': 'application/json',
