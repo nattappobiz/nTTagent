@@ -21,6 +21,25 @@ This is the React frontend for the ElderDocs document management system.
    npm install
    ```
 
+### Environment Variables
+
+Create a `.env` file in this directory to configure the API endpoint:
+
+```
+REACT_APP_API_URL=http://localhost:8000
+```
+
+During development, the app loads this value automatically. If the variable is
+absent, it falls back to `http://localhost:8000`.
+
+For production or other environments, set `REACT_APP_API_URL` before running a
+build. Example scripts are provided:
+
+```
+npm run build:staging
+npm run build:prod
+```
+
 ### Running the Application
 
 1. Start the development server:
@@ -34,7 +53,7 @@ This is the React frontend for the ElderDocs document management system.
 
 To create a production build:
 ```
-npm run build
+npm run build:prod
 ```
 
 ## Project Structure
@@ -57,7 +76,7 @@ frontend/
 
 - View citizen records in a table format
 - Upload PDF documents containing citizen information
-- Communicates with the backend API at `http://localhost:8000`
+- Communicates with the backend API specified by `REACT_APP_API_URL`
 
 ## API Endpoints
 
