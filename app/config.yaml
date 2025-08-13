@@ -1,0 +1,47 @@
+app:
+  # Input directory where uploaded PDFs are stored. Adjust this path for your deployment.
+  input_directory: "input"
+  # Archive directory where processed PDFs are moved during export. The worker will create
+  # year/month subfolders under this directory.
+  archive_directory: "archive"
+  # Log file location. The logging setup will respect this path.
+  log_file: "logs/app.log"
+  # Default date format when serialising dates.
+  date_format: "%Y-%m-%d"
+  # Mapping of full Thai month names to their numeric representation.
+  thai_month_full:
+    มกราคม: 1
+    กุมภาพันธ์: 2
+    มีนาคม: 3
+    เมษายน: 4
+    พฤษภาคม: 5
+    มิถุนายน: 6
+    กรกฎาคม: 7
+    สิงหาคม: 8
+    กันยายน: 9
+    ตุลาคม: 10
+    พฤศจิกายน: 11
+    ธันวาคม: 12
+  # Mapping of abbreviated Thai month names to their numeric representation.
+  thai_month_abbr:
+    ม.ค.: 1
+    ก.พ.: 2
+    มี.ค.: 3
+    เม.ย.: 4
+    พ.ค.: 5
+    มิ.ย.: 6
+    ก.ค.: 7
+    ส.ค.: 8
+    ก.ย.: 9
+    ต.ค.: 10
+    พ.ย.: 11
+    ธ.ค.: 12
+
+# Regular expression patterns used to mask personally identifiable information (PII) in log messages.
+mask_patterns:
+  # Thai citizen identification numbers (13 digits). All matches will be replaced by asterisks.
+  cid: "\\d{13}"
+  # Thai phone numbers (9–10 digits).
+  phone: "\\d{9,10}"
+  # Dates containing Thai months in either full or abbreviated form. Used to hide birthday and register date.
+  dob: "\\d{1,2}\\s(?:ม\\.ค\\.|ก\\.พ\\.|มี\\.ค\\.|เม\\.ย\\.|พ\\.ค\\.|มิ\\.ย\\.|ก\\.ค\\.|ส\\.ค\\.|ก\\.ย\\.|ต\\.ค\\.|พ\\.ย\\.|ธ\\.ค\\.|มกราคม|กุมภาพันธ์|มีนาคม|เมษายน|พฤษภาคม|มิถุนายน|กรกฎาคม|สิงหาคม|กันยายน|ตุลาคม|พฤศจิกายน|ธันวาคม)\\s\\d{2,4}"
