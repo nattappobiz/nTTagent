@@ -66,9 +66,23 @@ def extract_fields(text: str) -> Dict[str, Optional[str]]:
     # Standardise whitespace and collapse multiple spaces
     norm_text = re.sub(r"\s+", " ", text)
     # Extract CID: first occurrence of 13 consecutive digits
-    cid_match = re.search(r"\b\d{13}\b", norm_text)
+    # Handle cases where the ID number might have spaces or dashes
+    cid_match = re.search(r"\b\d{1,3}[-\s]?\d{1,3}[-\s]?\d{1,3}[-\s]?\d{1,3}[-\s]?\d{1,3}\b", norm_text)
     if cid_match:
-        result["cid"] = cid_match.group(0)
+        # Remove any spaces or dashes to get the clean 13-digit ID
+        cid_clean = re.sub(r"[-\s]", "", cid_match.group(0))
+        if len(cid_clean) == 13:
+            result["cid"] = cid_clean
+        else:
+            # Fallback to original pattern if the cleaned version isn't 13 digits
+            cid_match_original = re.search(r"\b\d{13}\b", norm_text)
+            if cid_match_original:
+                result["cid"] = cid_match_original.group(0)
+    else:
+        # Original pattern as fallback
+        cid_match = re.search(r"\b\d{13}\b", norm_text)
+        if cid_match:
+            result["cid"] = cid_match.group(0)
     # Extract phone: Thai phone numbers usually start with 0 and have 9–10 digits
     phone_match = re.search(r"0\d{8,9}", norm_text)
     if phone_match:
